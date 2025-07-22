@@ -1,0 +1,13 @@
+# Ambiente Virtual (inútil em outro PC)
+venv/
+
+# Banco de Dados (para não sobrescrever dados sem querer)
+db.sqlite3
+
+# Arquivos de Senhas e Segredos (NUNCA SUBIR ISSO)
+id e senha/
+.env
+
+# Arquivos temporários do Python
+__pycache__/
+*.pyc
