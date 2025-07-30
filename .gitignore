@@ -10,4 +10,4 @@ id e senha/
 
 # Arquivos temporários do Python
 __pycache__/
-*.pyc
+*.pycS
