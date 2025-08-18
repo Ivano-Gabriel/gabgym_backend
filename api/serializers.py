@@ -1,30 +1,63 @@
-# gabgym_backend/api/serializers.py
+# api/serializers.py
 
 from rest_framework import serializers
 from .models import UserProfile, DailyLog
 from django.contrib.auth.models import User
 
+# Serializer para mostrar informações básicas do usuário
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
 
-
+# Serializer para o Perfil do Usuário
 class UserProfileSerializer(serializers.ModelSerializer):
-    # AGORA, o campo 'user' é tratado de forma explícita.
-    # Ele espera receber um ID (pk = Primary Key) e vai mostrar os dados do UserSerializer na leitura.
-    user = UserSerializer(read_only=True)
-    user_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='user', write_only=True
-    )
+    user = UserSerializer(read_only=True) # Mostra os dados do usuário, em vez de só o ID
 
     class Meta:
         model = UserProfile
-        # Adicionamos 'user_id' nos campos para ele ser aceito na escrita
-        fields = ['id', 'user', 'user_id', 'name', 'age', 'weight', 'height', 'gender', 'objective']
+        fields = '__all__'
 
-# O DailyLogSerializer continua igual por enquanto
+# Serializer para o Diário de Bordo
 class DailyLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyLog
         fields = '__all__'
+        
+# api/serializers.py (Versão Completa)
+
+from rest_framework import serializers
+from .models import UserProfile, DailyLog, MuscleGroup, Exercise # Importamos os novos modelos
+from django.contrib.auth.models import User
+
+# --- SEU CÓDIGO EXISTENTE (PERFEITO, NÃO MEXA) ---
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+class DailyLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyLog
+        fields = '__all__'
+# --- FIM DO SEU CÓDIGO EXISTENTE ---
+
+
+# --- CÓDIGO NOVO (Adicionar no final do arquivo) ---
+class ExerciseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exercise
+        fields = '__all__'
+
+class MuscleGroupSerializer(serializers.ModelSerializer):
+    exercises = ExerciseSerializer(many=True, read_only=True)
+    class Meta:
+        model = MuscleGroup
+        fields = ['id', 'name', 'exercises']
+# --- FIM DO CÓDIGO NOVO ---

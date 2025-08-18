@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from api.views import GoogleLoginView # Importa nossa nova view
+#from api.views import GoogleLoginView# # 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,7 +11,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     
     # A ROTA DA NOSSA "CASA DE CÂMBIO"
-    path('api/auth/google/', GoogleLoginView.as_view(), name='google_login'),
+    #path('api/auth/google/', GoogleLoginView.as_view(), name='google_login'),#
     
     # Rotas de autenticação padrão (logout, etc.) que o dj-rest-auth provê
     path('api/auth/', include('dj_rest_auth.urls')),
