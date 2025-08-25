@@ -101,3 +101,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none' # Para simplificar nossos testes
+# Configurações para servir arquivos de mídia em desenvolvimento
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

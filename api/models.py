@@ -3,7 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# --- SEU CÓDIGO EXISTENTE (PERFEITO, NÃO MEXA) ---
+# --- S
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     age = models.IntegerField(null=True, blank=True)
@@ -27,8 +27,6 @@ class DailyLog(models.Model):
         return f"Log for {self.user_profile.user.username} on {self.date}"
 # --- FIM DO SEU CÓDIGO EXISTENTE ---
 
-
-# --- CÓDIGO NOVO (Adicionar no final do arquivo) ---
 class MuscleGroup(models.Model):
     name = models.CharField(max_length=100, unique=True)
     
@@ -44,4 +42,23 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.name
-# --- FIM DO CÓDIGO NOVO ---
+
+class FoodCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class FoodItem(models.Model):
+    name = models.CharField(max_length=200)
+    unit = models.CharField(max_length=50, blank=True)
+    serving_desc = models.CharField(max_length=100, blank=True)
+    calories = models.FloatField(default=0)
+    protein = models.FloatField(default=0)
+    carbs = models.FloatField(default=0)
+    fat = models.FloatField(default=0)
+    image_path = models.CharField(max_length=255, blank=True)
+    category = models.ForeignKey(FoodCategory, related_name='food_items', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

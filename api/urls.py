@@ -1,21 +1,19 @@
-# api/urls.py (Versão Completa)
+# gabgym_backend/api/urls.py (Versão Final e Correta)
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-# Importamos as novas Views
-from .views import UserProfileViewSet, DailyLogViewSet, MuscleGroupViewSet, ExerciseViewSet
+# 1. Importamos SOMENTE os ViewSets que nós criamos
+from .views import MuscleGroupViewSet, ExerciseViewSet, FoodCategoryViewSet
 
+# 2. Criamos o nosso roteador automático
 router = DefaultRouter()
-# Rotas que você já tinha
-router.register(r'userprofiles', UserProfileViewSet, basename='userprofile') 
-router.register(r'dailylogs', DailyLogViewSet, basename='dailylog')
 
-# --- CÓDIGO NOVO ---
-# Adicionando as novas rotas ao mesmo roteador
+# 3. Registramos cada rota com seu respectivo ViewSet
 router.register(r'muscle-groups', MuscleGroupViewSet, basename='musclegroup')
-router.register(r'exercises', ExerciseViewSet, basename='exercise')
-# --- FIM DO CÓDIGO NOVO ---
+router.register(r'exercises', ExerciseViewSet, basename='exercise') # A rota de exercícios que faltava
+router.register(r'food-categories', FoodCategoryViewSet, basename='foodcategory')
 
+# 4. Incluímos todas as URLs geradas pelo roteador
 urlpatterns = [
     path('', include(router.urls)),
 ]

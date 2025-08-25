@@ -1,20 +1,18 @@
-# gabgym_backend/gabgym_api/urls.py
+# gabgym_backend/gabgym_api/urls.py (Versão Corrigida)
 
 from django.contrib import admin
 from django.urls import path, include
-#from api.views import GoogleLoginView# # 
+# --- A LINHA QUE FALTAVA ESTÁ AQUI ---
+from django.conf import settings 
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    # Nossas rotas da API de dados (perfis, logs, etc)
     path('api/', include('api.urls')),
-    
-    # A ROTA DA NOSSA "CASA DE CÂMBIO"
-    #path('api/auth/google/', GoogleLoginView.as_view(), name='google_login'),#
-    
-    # Rotas de autenticação padrão (logout, etc.) que o dj-rest-auth provê
     path('api/auth/', include('dj_rest_auth.urls')),
-    
     path('auth/registration/', include('dj_rest_auth.registration.urls')),
 ]
+
+# Agora a condição "if settings.DEBUG" vai funcionar perfeitamente
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

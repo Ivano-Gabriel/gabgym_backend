@@ -76,4 +76,14 @@ class ExerciseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
     permission_classes = [permissions.AllowAny]
+    
+from .models import FoodCategory
+from .serializers import FoodCategorySerializer
+
+from rest_framework import permissions
+
+class FoodCategoryViewSet(viewsets.ModelViewSet):
+    queryset = FoodCategory.objects.all()
+    serializer_class = FoodCategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 # --- FIM DO CÓDIGO NOVO ---
